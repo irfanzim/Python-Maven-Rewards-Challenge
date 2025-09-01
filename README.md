@@ -140,7 +140,7 @@ This is a project from Maven Analytics (https://mavenanalytics.io/challenges/mav
 
 ## Notes
 
-I analyze data for customer Id for example: for id number “e2127556f4f64592b11af22de27a7932”, I found out that at time 522, one transaction happen and two offer completed. So, it is not possible to associate for what offer, the transaction was actually made. Transactions are not associated with offer_id. For a one single time, one transaction and multiple offer completion can occur. Which actually made the dataset complex to link any offer completion with transaction.
+I analyzed data for customer Id ; for example: for id number “e2127556f4f64592b11af22de27a7932”, I found out that at time 522, one transaction happen and two offer completed. So, it is not possible to associate for what offer, the transaction was actually made. Transactions are not associated with offer_id. For a one single time, one transaction and multiple offer completion can occur. Which actually made the dataset complex to link any offer completion with transaction.
 
 <img width="1189" height="689" alt="image" src="https://github.com/user-attachments/assets/95145c9c-fa41-43d7-be03-2d39f6da41a6" />
 
