@@ -16,7 +16,7 @@ These findings give us a clear roadmap to optimize future campaigns.
 
 ---
 
-## 🎯 Project Goal
+## Project Goal
 
 The goal of this project was to answer three main questions:
 
@@ -28,7 +28,7 @@ Insights from this test will guide **future promotional campaigns** to bring in 
 
 ---
 
-## 🛠 Data Preparation & Approach
+## Data Preparation & Approach
 
 This is a project from Maven Analytics (https://mavenanalytics.io/challenges/maven-rewards-challenge)
 
@@ -52,7 +52,7 @@ This is a project from Maven Analytics (https://mavenanalytics.io/challenges/mav
 
 ---
 
-## 📊 Key Results
+## Key Results
 
 1. **Offer transactions = 24%** of total transactions but made up **35% of revenue**.
 2. **Average transaction size**:
@@ -96,7 +96,7 @@ This is a project from Maven Analytics (https://mavenanalytics.io/challenges/mav
 
 ---
 
-## ✅ Recommendations
+## Recommendations
 
 1. **Target Age Groups**:
 
@@ -132,8 +132,31 @@ This is a project from Maven Analytics (https://mavenanalytics.io/challenges/mav
 
 ---
 
-## 🧰 Tech Stack
+## Tech Stack
 
 * **Python**: Pandas, NumPy
 * **Jupyter Notebook** for data exploration & analysis
 * **Excel/CSV** for data sources
+
+## Notes
+
+I analyze data for one customer Id “e2127556f4f64592b11af22de27a7932”, and I found out that at time 522, one transaction happen and two offer completed. So, it is not possible to associate for what offer, the transaction was actually made. Transactions are not associated with offer_id. For a one single time, one transaction and multiple offer completion can occur. Which actually made the dataset complex to link any offer completion with transaction.
+
+<img width="1189" height="689" alt="image" src="https://github.com/user-attachments/assets/95145c9c-fa41-43d7-be03-2d39f6da41a6" />
+
+One person can receive multiple offers without even vieweing or completing the first offer. And some cases, we can see view time is before receive time.
+
+<img width="763" height="523" alt="image" src="https://github.com/user-attachments/assets/f06e33a3-2a0e-4b3d-80ad-180c71da26b8" />
+
+I also got that, customer can complete the offer without viewing it
+
+<img width="808" height="211" alt="image" src="https://github.com/user-attachments/assets/6fafbf71-9935-4e97-9c0b-cd85b29c2f1a" />
+
+I also converted duration to hours. A valid offer completion time should be lower or equal than receive time+duration. Finally, I ran the analysis for same customer Id “e2127556f4f64592b11af22de27a7932”. And, I got that transaction time 522 is still getting connected to two offers.
+
+<img width="1108" height="219" alt="image" src="https://github.com/user-attachments/assets/d1a341f8-46dc-431d-aa2b-2b22ceffc155" />
+
+
+So, I did not go further with this time matching approach. 
+
+Rather, I separated offer_completed dataset and applied the logic that offer_completed time is same as transaction time to get transaction dataset.
