@@ -144,7 +144,7 @@ I analyze data for one customer Id “e2127556f4f64592b11af22de27a7932”, and I
 
 <img width="1189" height="689" alt="image" src="https://github.com/user-attachments/assets/95145c9c-fa41-43d7-be03-2d39f6da41a6" />
 
-One person can receive multiple offers without even vieweing or completing the first offer. And some cases, we can see view time is before receive time.
+One person can receive multiple offers.
 
 <img width="763" height="523" alt="image" src="https://github.com/user-attachments/assets/f06e33a3-2a0e-4b3d-80ad-180c71da26b8" />
 
