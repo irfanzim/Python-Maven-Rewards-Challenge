@@ -55,44 +55,71 @@ This is a project from Maven Analytics (https://mavenanalytics.io/challenges/mav
 ## Key Results
 
 1. **Offer transactions = 24%** of total transactions but made up **35% of revenue**.
+<img width="550" height="114" alt="image" src="https://github.com/user-attachments/assets/5fd0b294-47cc-4696-a140-aae54c14dc71" />
+<img width="540" height="113" alt="image" src="https://github.com/user-attachments/assets/520dc7fa-62ee-4541-8491-6d3103d72a71" />
+
 2. **Average transaction size**:
 
    * With offers: **\$20.50**
    * Without offers: **\$12**
+
+  <img width="565" height="130" alt="image" src="https://github.com/user-attachments/assets/aab7efde-3316-4f1c-9ab9-8142756d5ea7" />
+  <img width="805" height="170" alt="image" src="https://github.com/user-attachments/assets/b17d62c9-7f22-452a-b976-62b73fb9b9f7" />
+
      
 3. **Age cohorts**:
 
    * Seniors (65–79): Avg \$23 per transaction with offers
    * Older Adults (50–64): Avg \$22 per transaction with offers
    * Elderly (80–110): Smaller group but high spend (**\$56 per customer**)
+
+  <img width="1128" height="239" alt="image" src="https://github.com/user-attachments/assets/93b0129a-16e6-42b0-ba4d-e7bc55f66e1c" />
+
      
 4. **Income cohorts**:
 
    * High-income (\$84k+): Fewer purchases but highest spend (**\$78 per customer, \$29 per transaction**)
    * Middle-income (\$44–84k): Completed the most offers (19403) overall.
+  <img width="1029" height="232" alt="image" src="https://github.com/user-attachments/assets/907dad21-a36f-487a-804c-787766289f48" />
+  <img width="1174" height="212" alt="image" src="https://github.com/user-attachments/assets/2d2080c5-43d7-473f-82fb-fe5f86955606" />
+
      
 5. **Gender**:
 
-   * Men completed slightly more offers (51% vs. 48%),
+   * Men completed slightly more offers (51% vs. 48%)
+   <img width="812" height="253" alt="image" src="https://github.com/user-attachments/assets/0ae837de-7d79-4333-8bc7-2814d0586f78" />
    * But women spent **more per customer** (\$58 vs. \$44.5).
+   <img width="927" height="230" alt="image" src="https://github.com/user-attachments/assets/a06ea311-b3be-443d-9c80-266b94adf3f6" />
      
 6. **Best offers**:
 
    * `discount-10-2-10`: **74.5% completion**
    * `discount-7-3-7`: **72.8% completion**
    * Weak: BOGOs and `discount-20-5-10`.
+  <img width="710" height="355" alt="image" src="https://github.com/user-attachments/assets/fa429e57-e6e8-43b9-be99-b5e66c19ddd2" />
+
      
 7. **Channels**:
 
    * Campaigns sent via all four channels had **65% completion**.
+  <img width="703" height="230" alt="image" src="https://github.com/user-attachments/assets/8097381a-cf5c-4233-b9c3-b205d9c07498" />
+
      
 8. **Customer behavior**:
 
    * Avg wait to view: **3 days after receiving** an offer
+<img width="824" height="130" alt="image" src="https://github.com/user-attachments/assets/0b3283c8-b914-47b8-bee0-e2a94b004ce8" />
+
    * Avg time to purchase after viewing: **5 hours**
+<img width="829" height="130" alt="image" src="https://github.com/user-attachments/assets/88859229-7f04-4abb-90a2-77717b660e89" />
+
    * Some customers completed up to **6 offers** in 30 days
+<img width="888" height="299" alt="image" src="https://github.com/user-attachments/assets/ca627f8d-6b9b-475a-8575-d556225866b4" />
+
      
 9. **Reward-to-sales ratio**: **26%** (for every \$1 generated, \$0.26 went to rewards).
+<img width="770" height="140" alt="image" src="https://github.com/user-attachments/assets/4323d5d1-c958-4062-ade5-b1b1c79e17d8" />
+
 
 ---
 
