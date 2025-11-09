@@ -1,0 +1,56 @@
+total transaction 123957, total offer received 66501, offer viewed 49860, offer completed 32070
+Total offer related transaction is 22533.
+Avg offer related transaction amount is 20.46 dollar, average reward is 4.97 dollar
+Total Revenue is $1734942.40
+Average revenue with or without offer is: $14.00
+Total Attributed Revenue: $461,130.75
+26.58 percent of total revenue is offer related
+Total Rewards Paid:       $111,879.00
+Reward-to-Sales Ratio:    24.26%
+Total offer related transaction is (21642, 18)
+Total non offer transaction is (102315, 18)
+Average Offer-Driven Transaction: $20.19
+Average Non-Offer Transaction:    $12.69
+Insight: Offer-driven purchases are, on average, 59.2% more valuable.
+
+--- Offer Conversion Rates (BOGO/Discount) ---
+                  Completions  Received Conversion Rate
+offer_key                                              
+discount-10-2-10         4329      6652          65.08%
+discount-7-3-7           4119      6655          61.89%
+bogo-5-5-5               3374      6576          51.31%
+bogo-10-10-5             2731      6593          41.42%
+bogo-10-10-7             2585      6683          38.68%
+discount-10-2-7          2047      6631          30.87%
+bogo-5-5-7               2037      6685          30.47%
+discount-20-5-10         1311      6726          19.49%
+
+Comment Discount offers are more successful compared to bogo offers.
+
+
+
+--- Analysis by Age Group (Offer Completions) ---
+                  count          sum    mean
+age_group                                   
+Senior             4947  $111,882.33  $22.62
+Older Adult        8258  $185,998.16  $22.52
+Elderly            1808   $39,608.99  $21.91
+Middle Age Adult   4918   $88,471.96  $17.99
+Young Adult        2602   $35,169.31  $13.52
+Comment: Senior, Older Adult, and Elderl' customers are the premium segment. They spend an average of $22 per successful offer. They are high-value and reliable.
+
+--- Analysis by Income Group (Offer Completions) ---
+               count          sum    mean
+income_group                             
+High Income     5455  $162,555.71  $29.80
+Middle Income  14030  $261,636.93  $18.65
+Low Income      3048   $36,938.11  $12.12
+Comment High income group tend to spend more per transaction.
+
+--- Analysis by Gender (Offer Completions) ---
+        count          sum    mean
+gender                            
+F       10500  $235,064.10  $22.39
+O         389    $7,536.91  $19.38
+M       11644  $218,529.74  $18.77
+Comment Female spend more per transaction compared to men.
