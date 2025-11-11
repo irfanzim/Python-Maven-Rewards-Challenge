@@ -4,4 +4,4 @@ __pycache__/
 *.env
 
 # Ignore temporary Excel files
-~$*.xlsx
+~$*.xlsx.ipynb_checkpoints/
