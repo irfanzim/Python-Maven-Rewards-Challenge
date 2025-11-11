@@ -1,189 +1,125 @@
-# Maven Cafe Rewards: 30-Day Offer Test — Results & Recommendations
+# Maven Cafe Rewards Challenge: Customer Segmentation & Offer Analysis
+
+## Project Description
 
-## Executive Summary
+This project analyzes customer behavior from a 30-day promotional test at Maven Cafe. The goal is to understand how different customer segments respond to various offers (Buy-One-Get-One, Discount, Informational). The analysis identifies key customer segments and provides data-driven recommendations for future marketing strategies to maximize impact, increase revenue, and improve customer loyalty.
+
+This case study follows a structured data analytics workflow, moving from data cleaning and preparation to in-depth attribution modeling, exploratory data analysis, and finally, strategic recommendations.
 
-Over a 30-day period, Maven Cafe tested different types of offers with Rewards members. The results were clear: **offers drive bigger baskets and more revenue, even though they account for fewer transactions overall.**
+## Objectives
 
-Key insights:
+The primary goals of this analysis are to answer three key business questions:
+* **Which customers respond best to offers?**
+* **What types of offers work best?**
+* **How should we reach customers to maximize impact?**
 
-* **Older Adults and Seniors** were the most engaged and delivered the highest value.
-* **High-income customers** purchased less often but spent the most per visit.
-* **Women spent more per customer than men**, even though men made more transactions.
-* **Best-performing offers**: `discount-10-2-10` and `discount-7-3-7`.
-* **Most effective communication strategy**: using **all four channels** (web, email, mobile, social).
+## Dataset Overview
 
-These findings give us a clear roadmap to optimize future campaigns.
+The analysis is based on three core datasets simulating customer activity over the 30-day test period:
 
----
+* **`cleaned_customer_data.csv`**: Contains demographic information for 14,825 unique rewards members, including age, gender, income, and membership start date.
+* **`cleaned_events.csv`**: A transactional log of 306,137 events associated with 17,000 unique customers. Events are categorized as 'offer received', 'offer viewed', 'offer completed', or 'transaction'.
+* **`cleaned_offers.csv`**: A portfolio detailing the 10 unique promotional offers tested, including offer type (BOGO, discount, informational), difficulty (spend threshold), reward, duration, and marketing channels.
 
-## Project Goal
+## Data Preparation & Cleaning
 
-The goal of this project was to answer three main questions:
+To prepare the data for analysis, several cleaning, transformation, and feature engineering steps were performed:
 
-1. **Which customers respond best to offers?**
-2. **What types of offers work best?**
-3. **How should we reach them to maximize impact?**
+* The main three datasets (customer, event, offer) were inspected. From the **customer** table, 2,175 rows were removed as outliers, as their `age` was listed as 118. From the **event** table, 397 duplicated rows were identified and deleted.
+* **Timestamp Standardization**: The offer `duration` (in days) was converted to `duration_hours` (e.g., 7 days -> 168 hours) to align with the `time` column (in hours) from the event log.
+* **Feature Engineering (Offers)**: A human-readable `offer_key` (e.g., 'bogo-5-5-7') was created from the offer attributes for easier analysis and visualization.
+* **Feature Engineering (Customers)**:
+    * The `became_member_on` column was converted to datetime objects, and a `membership_year` feature was extracted.
+    * Customer demographics were binned into cohorts:
+        * `age_group`: 'Young Adult', 'Middle Age Adult', 'Older Adult', 'Senior', 'Elderly'
+        * `income_group`: 'Low Income', 'Middle Income', 'High Income'
+* **Data Merging & Filtering**:
+    * The three datasets were merged into a single master timeline (`df_master`).
+    * This process identified 33,749 "orphan" events (events from customers not present in the demographic table), which were dropped to ensure data integrity.
+    * The final merged dataset, sorted by customer and time, contained 272,388 event rows.
 
-Insights from this test will guide **future promotional campaigns** to bring in more revenue and improve customer loyalty.
+### Offer Attribution Logic
 
----
+A core challenge was to attribute transactions to specific offers. A function was built to identify **"truly influenced purchases"** by tracking a customer's journey through a strict funnel. This attribution logic was applied only to BOGO and Discount offers.
 
-## Data Preparation & Approach
+A successful journey was defined as:
+1.  **Offer Received:** The customer receives the offer.
+2.  **Offer Viewed:** The customer views the offer *after* receiving it and *before* it expires.
+3.  **Offer Completed:** The customer completes the offer (meets the spend threshold) *after* viewing it and *before* it expires.
+4.  **Transaction Match:** A `transaction` event occurs at the *exact same time* as the `offer completed` event.
 
-This is a project from Maven Analytics (https://mavenanalytics.io/challenges/maven-rewards-challenge)
+This process yielded the final analysis-ready dataset (`df_final`) containing **22,533 successful offer completions**.
 
-* **Datasets Used**:
-  
-  1. Customer demographics
-  2. Offer details
-  3. Customer activities (offer received, viewed, completed, and transactions)
+## Exploratory Data Analysis (EDA) & Insights
 
-* **Cleaning Steps**:
+### Customer Insights
+* **Core Demographics**: The customer base is heavily skewed towards **Older Adults (age 50-65)** and **Middle-Income earners ($50k-$80k)**. The largest single segment is "Older Adult + Middle Income."
+* **Highest Spenders**: While Middle-Income is the largest group, the **High-Income** segment spends the most per offer transaction (Avg. $29.80).
+* **Age & Spending**: **Seniors** ($22.62) and **Older Adults** ($22.52) have the highest average spend per offer, significantly more than Young Adults ($13.52).
+* **Gender**: **Females** tend to spend more per offer transaction ($22.39) than Males ($18.77).
 
-  * Fixed missing values
-  * Removed extreme outliers (e.g., age 118)
-  * Grouped customers into **age cohorts** (18–34, 35–49, 50–64, 65–79, 80–110)
-  * Grouped customers into **income cohorts** (Low: 0–44k, Middle: 44–84k, High: 84k+)
+### Transaction Insights
+* **Offer Value**: Offers are highly effective at driving value.
+    * Average Offer-Driven Transaction: **$20.19**
+    * Average Non-Offer Transaction: **$12.69**
+* **Key Insight**: Purchases influenced by an offer are **59.2% more valuable** than regular, non-promotional purchases.
+* **Financial Impact**:
+    * Total Attributed Revenue (BOGO/Discount): **$461,130.75**
+    * Total Rewards Paid: **$111,879.00**
+    * This represents a **24.26% Reward-to-Sales Ratio** (i.e., for every $1.00 in sales, $0.24 was paid in rewards).
 
-* **Offer-to-transaction rule**:
-  A transaction was counted as **offer-related only if it occurred at the same time as the offer completion event.**
+### Offer & Channel Insights
+* **Funnel Leakage**: The marketing funnel reveals two major drop-off points:
+    1.  **Discovery Leakage (23.8%)**: 23.8% of all BOGO/Discount offers sent were *never viewed* by the customer.
+    2.  **Persuasion Leakage (44.4%)**: Of the customers who *did* view an offer, 44.4% did not complete it.
+* **Offer Preference**: **Discounts are significantly more persuasive than BOGO offers** across all age groups. Customers who view a discount offer are far more likely to complete it.
+* **Channel Effectiveness**: The "Discovery Leakage" is directly tied to the marketing channels used.
+    * **Best Channel**: The 4-channel combo (`web`, `email`, `mobile`, `social`) had the highest view rate (R->V) at **95.9%**.
+    * **Worst Channel**: The 2-channel combo (`web`, `email`) had a dismal view rate of **33.8%**.
+* **Best vs. Worst Offer**:
+    * **Best**: `discount-10-2-10` (65.1% R->C rate) and `discount-7-3-7` (61.9% R->C rate). These offers were persuasive (high V->C) and sent on effective channels (high R->V).
+    * **Worst**: `discount-20-5-10` (19.5% R->C rate). This was not a bad offer (57.6% V->C rate), but it was a **marketing failure**. It was sent on the worst-performing channel combo (`web`, `email`), so 66% of customers never even saw it.
 
-  * This conservative rule ensured accuracy and avoided over-crediting offers.
+## Visualizations
 
----
+* **Histograms**: Customer Age and Income distributions.
+* **Count Plots**: Customer distribution by `age_group` and `income_group`.
+* **Heatmap (Crosstab)**: A 2D grid showing customer concentration by Age Group vs. Income Group.
+* **Bar Plot (Funnel)**: A funnel plot visualizing the drop-off from 'Received' to 'Viewed' to 'Completed'.
+* **Bar Plot (Offer Performance)**: A horizontal bar chart ranking all BOGO/Discount offers by their final Received-to-Completed (R->C) conversion rate.
+* **Bar Plots (Segment Spend)**: Average offer-driven transaction value broken down by Age Group and Income Group.
+* **Heatmap (Preference)**: A 2D grid showing the View-to-Completed (V->C) conversion rate, segmenting by Age Group and Offer Type (BOGO vs. Discount).
 
-## Key Results
+## Key Findings & Strategic Recommendations
 
-1. **Offer transactions = 24%** of total transactions but made up **35% of revenue**.
-<img width="550" height="114" alt="image" src="https://github.com/user-attachments/assets/5fd0b294-47cc-4696-a140-aae54c14dc71" />
-<img width="540" height="113" alt="image" src="https://github.com/user-attachments/assets/520dc7fa-62ee-4541-8491-6d3103d72a71" />
+1.  **Prioritize Discount Offers**: Discounts are demonstrably more persuasive (higher V-to-C rate) than BOGO offers across all age segments. BOGO offers, especially those with high spend requirements ($10), perform poorly.
+    * **Action**: Shift marketing spend towards discount-based promotions.
 
-2. **Average transaction size**:
+2.  **Maximize Channel Exposure**: The single biggest point of failure is "Discovery" (23.8% of offers are never seen). This is purely a channel problem.
+    * **Action**: Use the 4-channel combination (`web`, `email`, `mobile`, `social`) for all high-priority offers. Avoid using the 2-channel (`web`, `email`) combo, as it was responsible for the worst-performing campaign.
 
-   * With offers: **\$20.50**
-   * Without offers: **\$12**
+3.  **Target High-Value Segments**: The most valuable customers (highest average spend per offer) are **High-Income earners** ($29.80), **Seniors** ($22.62), and **Older Adults** ($22.52).
+    * **Action**: Target these high-value segments with the most effective offers (`discount-10-2-10` and `discount-7-3-7`) to maximize ROI.
 
-  <img width="565" height="130" alt="image" src="https://github.com/user-attachments/assets/aab7efde-3316-4f1c-9ab9-8142756d5ea7" />
-  <img width="805" height="170" alt="image" src="https://github.com/user-attachments/assets/b17d62c9-7f22-452a-b976-62b73fb9b9f7" />
+4.  **Re-evaluate Low-Performing Offers**: The `discount-20-5-10` offer failed due to poor channel selection, not a bad promotion.
+    * **Action**: Re-test this offer using the 4-channel combo; its high V-C rate (57.6%) suggests it will be a strong performer if seen.
 
-     
-3. **Age cohorts**:
+## Tools & Technologies Used
 
-   * Seniors (65–79): Avg \$23 per transaction with offers
-   * Older Adults (50–64): Avg \$22 per transaction with offers
-   * Elderly (80–110): Smaller group but high spend (**\$56 per customer**)
+* **Python 3**
+* **Pandas**: For data manipulation, cleaning, and aggregation.
+* **NumPy**: For numerical operations.
+* **Matplotlib & Seaborn**: For data visualization (bar plots, histograms, heatmaps).
+* **Jupyter Notebook**: For interactive analysis and reporting.
 
-  <img width="1128" height="239" alt="image" src="https://github.com/user-attachments/assets/93b0129a-16e6-42b0-ba4d-e7bc55f66e1c" />
+## How to Run the Notebook
 
-     
-4. **Income cohorts**:
+To replicate this analysis, follow these steps:
+1.  Clone this repository.
+2.  Ensure you have the required Python libraries installed (`pandas`, `numpy`, `matplotlib`, `seaborn`).
+3.  Place the three CSV files (`cleaned_customer_data.csv`, `cleaned_events.csv`, `cleaned_offers.csv`) in the same directory as the notebook.
+4.  Run the `Final Analysis.ipynb` notebook from start to finish.
 
-   * High-income (\$84k+): Fewer purchases but highest spend (**\$78 per customer, \$29 per transaction**)
-   * Middle-income (\$44–84k): Completed the most offers (19403) overall.
-  <img width="1029" height="232" alt="image" src="https://github.com/user-attachments/assets/907dad21-a36f-487a-804c-787766289f48" />
-  <img width="1174" height="212" alt="image" src="https://github.com/user-attachments/assets/2d2080c5-43d7-473f-82fb-fe5f86955606" />
+## Author
 
-     
-5. **Gender**:
-
-   * Men completed slightly more offers (51% vs. 48%)
-   <img width="812" height="253" alt="image" src="https://github.com/user-attachments/assets/0ae837de-7d79-4333-8bc7-2814d0586f78" />
-   * But women spent **more per customer** (\$58 vs. \$44.5).
-   <img width="927" height="230" alt="image" src="https://github.com/user-attachments/assets/a06ea311-b3be-443d-9c80-266b94adf3f6" />
-     
-6. **Best offers**:
-
-   * `discount-10-2-10`: **74.5% completion**
-   * `discount-7-3-7`: **72.8% completion**
-   * Weak: BOGOs and `discount-20-5-10`.
-  <img width="710" height="355" alt="image" src="https://github.com/user-attachments/assets/fa429e57-e6e8-43b9-be99-b5e66c19ddd2" />
-
-     
-7. **Channels**:
-
-   * Campaigns sent via all four channels had **65% completion**.
-  <img width="703" height="230" alt="image" src="https://github.com/user-attachments/assets/8097381a-cf5c-4233-b9c3-b205d9c07498" />
-
-     
-8. **Customer behavior**:
-
-   * Avg wait to view: **3 days after receiving** an offer
-<img width="824" height="130" alt="image" src="https://github.com/user-attachments/assets/0b3283c8-b914-47b8-bee0-e2a94b004ce8" />
-
-   * Avg time to purchase after viewing: **5 hours**
-<img width="829" height="130" alt="image" src="https://github.com/user-attachments/assets/88859229-7f04-4abb-90a2-77717b660e89" />
-
-   * Some customers completed up to **6 offers** in 30 days
-<img width="888" height="299" alt="image" src="https://github.com/user-attachments/assets/ca627f8d-6b9b-475a-8575-d556225866b4" />
-
-     
-9. **Reward-to-sales ratio**: **26%** (for every \$1 generated, \$0.26 went to rewards).
-<img width="770" height="140" alt="image" src="https://github.com/user-attachments/assets/4323d5d1-c958-4062-ade5-b1b1c79e17d8" />
-
-
----
-
-## Recommendations
-
-1. **Target Age Groups**:
-
-   * Focus on **Older Adults (50–64) and Seniors (65–79)** → high engagement & strong spending.
-   * Don’t ignore Elderly (80–110) → high transaction values; use email & in-store promos instead of app/social.
-
-2. **Income Strategy**:
-
-   * High-income (\$84k+): Premium bundles & exclusive offers.
-   * Middle-income (\$44–84k): Simple, steady discounts for consistent traffic.
-
-3. **Gender Strategy**:
-
-   * Women: Loyalty rewards & curated bundles.
-   * Men: Maintain transaction-driving offers but push value per basket.
-
-4. **Offer Strategy**:
-
-   * Make `discount-10-2-10` the **main offer**.
-   * Use `discount-7-3-7` as a **strong secondary**.
-   * Reduce focus on BOGOs and `discount-20-5-10`.
-
-5. **Channel Strategy**:
-
-   * Use **all four channels** for big campaigns.
-   * Segment channel mix by age group (younger: social & mobile; older: email & in-store).
-
-6. **Engaging Younger Customers**:
-
-   * Small referral rewards
-   * Social-sharing incentives
-   * Experience-driven promotions
-
----
-
-## Tech Stack
-
-* **Python**: Pandas, NumPy
-* **Jupyter Notebook** for data exploration & analysis
-* **Excel/CSV** for data sources
-
-## Notes
-
-I analyzed data for customer Id ; for example: for id number “e2127556f4f64592b11af22de27a7932”, I found out that at time 522, one transaction happen and two offer completed. So, it is not possible to associate for what offer, the transaction was actually made. Transactions are not associated with offer_id. For a one single time, one transaction and multiple offer completion can occur. Which actually made the dataset complex to link any offer completion with transaction.
-
-<img width="1189" height="689" alt="image" src="https://github.com/user-attachments/assets/95145c9c-fa41-43d7-be03-2d39f6da41a6" />
-
-To solve the issue I tried to use the logic for offer duration. A valid offer completion time should be lower or equal than receive time+duration. I pivot the dataset based on receive time, view time, and completed time. I found out that. One person can receive multiple offers. I removed the rows where view time is less than receive time.
-
-<img width="763" height="523" alt="image" src="https://github.com/user-attachments/assets/f06e33a3-2a0e-4b3d-80ad-180c71da26b8" />
-
-I also got that, customer can complete the offer without viewing it. I kep those data, as it is sometimes logical.
-
-<img width="808" height="211" alt="image" src="https://github.com/user-attachments/assets/6fafbf71-9935-4e97-9c0b-cd85b29c2f1a" />
-
-I converted duration to hours. A valid offer completion time should be lower or equal than receive time+duration. Finally, I ran the analysis for same customer Id “e2127556f4f64592b11af22de27a7932”. And, I got that transaction time 522 is still getting connected to two offers.
-
-<img width="1108" height="219" alt="image" src="https://github.com/user-attachments/assets/d1a341f8-46dc-431d-aa2b-2b22ceffc155" />
-
-
-So, I did not go further with this time duration approach. 
-
-Rather, I separated offer_completed dataset and applied the logic that offer_completed time is same as transaction time to get transaction dataset.
+* **Sr. Marketing Analyst** (as per the case study brief)
