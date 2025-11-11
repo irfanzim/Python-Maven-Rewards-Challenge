@@ -20,9 +20,9 @@ The dataset you can get from https://mavenanalytics.io/challenges/maven-rewards-
 
 The analysis is based on three core datasets simulating customer activity over the 30-day test period:
 
-* **`cleaned_customer_data.csv`**: Contains demographic information for 14,825 unique rewards members, including age, gender, income, and membership start date.
-* **`cleaned_events.csv`**: A transactional log of 306,137 events associated with 17,000 unique customers. Events are categorized as 'offer received', 'offer viewed', 'offer completed', or 'transaction'.
-* **`cleaned_offers.csv`**: A portfolio detailing the 10 unique promotional offers tested, including offer type (BOGO, discount, informational), difficulty (spend threshold), reward, duration, and marketing channels.
+* **`customers.csv`**: Contains demographic information for 17,000 unique rewards members, including age, gender, income, and membership start date.
+* **`events.csv`**: A transactional log of 306,534 events associated with 17,000 unique customers. Events are categorized as 'offer received', 'offer viewed', 'offer completed', or 'transaction'.
+* **`offers.csv`**: A portfolio detailing the 10 unique promotional offers tested, including offer type (BOGO, discount, informational), difficulty (spend threshold), reward, duration, and marketing channels.
 
 ## Data Preparation & Cleaning
 
