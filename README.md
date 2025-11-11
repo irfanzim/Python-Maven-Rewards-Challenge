@@ -56,7 +56,7 @@ This process yielded the final analysis-ready dataset (`df_final`) containing **
 ## Exploratory Data Analysis (EDA) & Insights
 
 ### Customer Insights
-* **Core Demographics**: The customer base is heavily skewed towards **Older Adults (age 50-65)** and **Middle-Income earners ($50k-$80k)**. The largest single segment is "Older Adult + Middle Income."
+* **Core Demographics**: The customer base is heavily skewed towards **Older Adults (age 50-64)** and **Middle-Income earners ($45k-$84k)**. The largest single segment is "Older Adult + Middle Income."
 * **Highest Spenders**: While Middle-Income is the largest group, the **High-Income** segment spends the most per offer transaction (Avg. $29.80).
 * **Age & Spending**: **Seniors** ($22.62) and **Older Adults** ($22.52) have the highest average spend per offer, significantly more than Young Adults ($13.52).
 * **Gender**: **Females** tend to spend more per offer transaction ($22.39) than Males ($18.77).
