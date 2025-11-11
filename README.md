@@ -6,6 +6,7 @@ This project analyzes customer behavior from a 30-day promotional test at Maven 
 
 This case study follows a structured data analytics workflow, moving from data cleaning and preparation to in-depth attribution modeling, exploratory data analysis, and finally, strategic recommendations.
 
+
 ## Objectives
 
 The primary goals of this analysis are to answer three key business questions:
@@ -14,6 +15,8 @@ The primary goals of this analysis are to answer three key business questions:
 * **How should we reach customers to maximize impact?**
 
 ## Dataset Overview
+
+The dataset you can get from https://mavenanalytics.io/challenges/maven-rewards-challenge
 
 The analysis is based on three core datasets simulating customer activity over the 30-day test period:
 
